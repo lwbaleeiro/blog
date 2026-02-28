@@ -472,12 +472,35 @@
 
   /* MISC */
   .dashed { border: none; border-top: 1px dashed var(--line); margin: 13px 0; }
+  img { max-width: 100%; height: auto; display: block; }
 
+  /* RESPONSIVE */
   @media (max-width: 740px) {
-    .layout { grid-template-columns: 1fr; }
+    #wrap { padding: 0 15px 120px; }
+    .layout { grid-template-columns: 1fr; gap: 24px; }
     aside { position: static; }
     .proj-grid { grid-template-columns: 1fr; }
-    .cv-entry { grid-template-columns: 1fr; }
+    .cv-entry { grid-template-columns: 1fr; gap: 4px; }
     .site-title { font-size: 34px; }
     .header-meta { display: none; }
+    
+    /* Nav scrolling on mobile */
+    nav { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .nav-ps { position: sticky; left: 0; background: var(--bg2); z-index: 10; }
+    nav::-webkit-scrollbar { height: 3px; }
+    nav::-webkit-scrollbar-thumb { background: var(--line); }
+
+    .fp-box { padding: 18px 20px; }
+    .fp-title { font-size: 26px; }
+
+    /* Compact terminal on mobile */
+    .tbar { padding: 8px 15px; height: auto; min-height: 48px; flex-wrap: wrap; }
+    #cmd { font-size: 14px; min-height: 32px; }
+    #cout { max-width: 100%; width: 100%; border-top: 1px solid var(--bd); padding-top: 4px; margin-top: 4px; white-space: normal; height: auto; }
+  }
+
+  @media (max-width: 480px) {
+    .site-title { font-size: 28px; }
+    .nav-ps { display: none; } /* Hide prompt on very small screens to save space */
+    nav a { padding: 7px 12px; }
   }
