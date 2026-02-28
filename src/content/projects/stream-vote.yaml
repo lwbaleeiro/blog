@@ -1,0 +1,9 @@
+name: "stream-vote"
+description: "Real-time polling system with WebSocket support. Users can create polls, vote, and see live results — built with TypeScript and Bun."
+tags: ["typescript", "bun", "websocket", "sqlite"]
+links:
+  - label: "github"
+    url: "https://github.com/lwbaleeiro/stream-vote"
+  - label: "demo (soon)"
+    url: "#"
+wip: true

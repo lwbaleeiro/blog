@@ -1,0 +1,35 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map(post => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+const base = import.meta.env.BASE_URL.replace(/\/$/, '') || '';
+---
+<Layout title={post.data.title} activeNav="blog">
+  <section id="blog" class="active" style="display:block;">
+    <div class="fp open" id="fp">
+      <a href={`${base}/`} class="back-btn" style="text-decoration:none;">← back to /blog</a>
+      <div class="fp-box">
+        <div class="fp-meta" id="fp-meta">
+          <span>{post.data.date}</span>
+          {post.data.tags.map(tag => (
+            <span class={`pt ${tag}`}>{tag}</span>
+          ))}
+        </div>
+        <div class="fp-title" id="fp-title">{post.data.title}</div>
+        <div class="fp-body" id="fp-body">
+          <Content />
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

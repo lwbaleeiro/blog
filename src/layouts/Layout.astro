@@ -1,0 +1,373 @@
+---
+import '../styles/global.css';
+import { ViewTransitions } from 'astro:transitions';
+import { getCollection } from 'astro:content';
+
+interface Props {
+	title: string;
+	activeNav?: 'blog' | 'projects' | 'cv';
+}
+
+const { title, activeNav = 'blog' } = Astro.props;
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '') || '';
+
+const allPosts = await getCollection('blog');
+const recentPosts = allPosts
+  .sort((a, b) => new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf())
+  .slice(0, 3);
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{title} — dev@localhost:~$</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&family=VT323&display=swap" rel="stylesheet">
+  <ViewTransitions />
+</head>
+<body>
+<div id="wrap">
+  <header>
+    <div class="header-inner">
+      <div>
+        <div class="site-title">
+          dev<span class="dim">@</span>localhost<span class="dim">:~$</span>
+        </div>
+        <div style="font-size:11px;color:var(--comment);margin-top:5px;">
+          <span style="color:var(--plus)">●</span>
+          developer · builder · manual reader ·
+          <span id="clock" style="color:var(--property)" transition:persist="clock"></span>
+        </div>
+      </div>
+      <div class="header-meta" transition:persist="header-meta">
+        <div>kernel: <strong>blog-os 1.0.0</strong></div>
+        <div>uptime: <strong id="uptime">00:00:00</strong></div>
+        <div>visitors: <strong id="hdr-v">—</strong></div>
+      </div>
+    </div>
+  </header>
+
+  <nav>
+    <div class="nav-ps">
+      <span style="color:var(--plus)">dev</span><span style="color:var(--comment)">@</span><span style="color:var(--builtin)">blog</span>:<span style="color:var(--hint)">~</span>
+    </div>
+    <a href={`${base}/`} id="nav-blog" class={activeNav === 'blog' ? 'active' : ''}>
+      <span class="kw">cd </span><span class="st">/blog</span>
+    </a>
+    <a href={`${base}/projects`} id="nav-projects" class={activeNav === 'projects' ? 'active' : ''}>
+      <span class="kw">cd </span><span class="st">/projects</span>
+    </a>
+    <a href={`${base}/whoami`} id="nav-cv" class={activeNav === 'cv' ? 'active' : ''}>
+      <span class="kw">cd </span><span class="st">/whoami</span>
+    </a>
+  </nav>
+
+  <div class="layout">
+    <main>
+      <slot />
+    </main>
+
+    <!-- SIDEBAR -->
+    <aside transition:persist="sidebar">
+      <div class="widget">
+        <div class="wh">whoami</div>
+        <div class="wb">
+          <div class="wl"><span class="k">user:</span> dev</div>
+          <div class="wl"><span class="k">role:</span> developer</div>
+          <div class="wl"><span class="k">local:</span> Earth</div>
+          <div class="wl"><span class="k">status:</span> <span class="sdot"></span>online</div>
+          <hr class="wig">
+          <div style="font-size:11px;color:var(--comment);line-height:1.7;">
+            Builder of things.<br>Manual reader.<br>Terminal lover.
+          </div>
+        </div>
+      </div>
+
+      <!-- VISITOR COUNTER -->
+      <div class="widget">
+        <div class="wh">visitors</div>
+        <div class="wb">
+          <div class="counter-wrap">
+            <div class="ctr">
+              <span class="cl">total:</span>
+              <span class="cv dim" id="cnt-total">...</span>
+            </div>
+            <div class="ctr">
+              <span class="cl">today:</span>
+              <span class="cv" id="cnt-today" style="font-size:18px;color:var(--string)">—</span>
+            </div>
+          </div>
+          <button class="ping-btn" id="ping-btn" data-btn-default="$ ping --register-visit" data-btn-pinged="✓ ping registered" data-msg-already="already registered this session.">
+            $ ping --register-visit
+          </button>
+          <div class="ping-st" id="ping-st"></div>
+        </div>
+      </div>
+
+      <div class="widget">
+        <div class="wh">recent posts</div>
+        <div class="wb">
+          <ul class="rl">
+            {recentPosts.map((post) => (
+              <li>
+                <a href={`${base}/blog/${post.slug}`} style="color:inherit;text-decoration:none;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" title={post.data.title}>
+                  {post.data.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      <div class="widget">
+        <div class="wh">tags</div>
+        <div class="wb">
+          <div class="tc">
+            <span>rust</span><span>java</span><span>typescript</span><span>python</span>
+            <span>cli</span><span>web</span><span>systems</span>
+            <span>linux</span><span>opinion</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="widget">
+        <div class="wh">uptime</div>
+        <div class="wb">
+          <div id="uptime-w" style="font-size:11px;color:var(--comment);"></div>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<!-- TERMINAL BAR -->
+<div class="tbar" transition:persist="tbar">
+  <span class="tps">
+    <span class="u">dev</span><span style="color:var(--comment)">@</span><span class="h">blog</span>:<span class="p">~</span><span style="color:var(--fg)"> $</span>
+  </span>
+  <input type="text" id="cmd" placeholder="type a command... (try: help)" autocomplete="off" spellcheck="false">
+  <span id="cout"></span>
+</div>
+
+<script>
+// Logic to execute on load and after swaps
+function initLogic() {
+  const isServer = typeof window === 'undefined';
+  if (isServer) return;
+
+  // ── CLOCK / UPTIME ────────────────────────────────────────────────
+  if (!window.sessionStartTime) {
+    window.sessionStartTime = Date.now();
+  }
+  
+  function tick() {
+    const now = new Date();
+    const clockEl = document.getElementById('clock');
+    if(clockEl) clockEl.textContent = now.toISOString().replace('T',' ').slice(0,19) + ' UTC';
+    
+    const s = Math.floor((Date.now() - window.sessionStartTime) / 1000);
+    const h = String(Math.floor(s/3600)).padStart(2,'0');
+    const m = String(Math.floor(s%3600/60)).padStart(2,'0');
+    const sc = String(s%60).padStart(2,'0');
+    const u = `${h}:${m}:${sc}`;
+    
+    const uptimeEl = document.getElementById('uptime');
+    if(uptimeEl) uptimeEl.textContent = u;
+    
+    const uptimewEl = document.getElementById('uptime-w');
+    if(uptimewEl) uptimewEl.textContent = 'session: ' + u;
+  }
+  
+  if (!window.clockInterval) {
+    tick();
+    window.clockInterval = setInterval(tick, 1000);
+  }
+
+  // ── VISITOR COUNTER ───────────────────────────────────────────────
+  const DOMAIN = window.location.hostname || 'localhost';
+  const API = 'https://visitor.6developer.com';
+
+  function setCounters(total, today) {
+    const el = document.getElementById('cnt-total');
+    if (!el) return;
+    el.classList.remove('dim');
+    el.textContent = total != null ? Number(total).toLocaleString('en-US') : '—';
+    const td = document.getElementById('cnt-today');
+    if (td) td.textContent = today != null ? Number(today).toLocaleString('en-US') : '—';
+    const hd = document.getElementById('hdr-v');
+    if (hd) hd.textContent = total != null ? Number(total).toLocaleString('en-US') : '—';
+  }
+
+  async function fetchCount() {
+    if (window.visitorsFetched) return;
+    window.visitorsFetched = true;
+    try {
+      const r = await fetch(`${API}/visit?domain=${encodeURIComponent(DOMAIN)}`);
+      const d = await r.json();
+      setCounters(d.totalCount, d.todayCount);
+      window.visitorData = { total: d.totalCount, today: d.todayCount };
+    } catch {
+      const c = document.getElementById('cnt-total');
+      if (c) { c.textContent = 'err'; c.classList.remove('dim'); }
+    }
+  }
+
+  if (window.visitorData) {
+    setCounters(window.visitorData.total, window.visitorData.today);
+  } else {
+    fetchCount();
+  }
+
+  async function doPing() {
+    const btn  = document.getElementById('ping-btn');
+    const st   = document.getElementById('ping-st');
+    if (!btn || !st) return;
+    const key  = 'pinged_' + new Date().toDateString();
+
+    const bmsg = btn.getAttribute('data-msg-already');
+    const bdef = btn.getAttribute('data-btn-default');
+    const bping = btn.getAttribute('data-btn-pinged');
+
+    if (sessionStorage.getItem(key)) {
+      st.textContent = bmsg;
+      st.className = 'ping-st ok';
+      return;
+    }
+
+    btn.textContent = '$ sending...';
+    btn.className = 'ping-btn pinging';
+    st.textContent = '';
+    st.className = 'ping-st';
+
+    try {
+      const r = await fetch(`${API}/visit`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          domain: DOMAIN,
+          timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+          page_path: window.location.pathname,
+          page_title: document.title,
+          referrer: document.referrer
+        })
+      });
+      const d = await r.json();
+      setCounters(d.totalCount, d.todayCount);
+      window.visitorData = { total: d.totalCount, today: d.todayCount };
+      sessionStorage.setItem(key, '1');
+      btn.textContent = bping;
+      btn.className = 'ping-btn pinged';
+      st.textContent = `PONG — visitor #${Number(d.totalCount).toLocaleString('en-US')}`;
+      st.className = 'ping-st ok';
+      out(`PONG — visitor #${d.totalCount}`, 'ok');
+    } catch {
+      btn.textContent = bdef;
+      btn.className = 'ping-btn';
+      st.textContent = 'failed to connect.';
+      st.className = 'ping-st err';
+      out('ping: request failed', 'err');
+    }
+  }
+  
+  const pingBtn = document.getElementById('ping-btn');
+  if (pingBtn && !pingBtn.hasAttribute('data-bound')) {
+    pingBtn.addEventListener('click', doPing);
+    pingBtn.setAttribute('data-bound', 'true');
+    // Restore state if already pinged
+    const key = 'pinged_' + new Date().toDateString();
+    if (sessionStorage.getItem(key)) {
+      pingBtn.textContent = pingBtn.getAttribute('data-btn-pinged');
+      pingBtn.className = 'ping-btn pinged';
+      const st = document.getElementById('ping-st');
+      if (st && window.visitorData) {
+         st.textContent = `PONG — visitor #${Number(window.visitorData.total).toLocaleString('en-US')}`;
+         st.className = 'ping-st ok';
+      }
+    }
+  }
+
+  // ── TERMINAL ──────────────────────────────────────────────────────
+  function out(msg, cls='') {
+    const el = document.getElementById('cout');
+    if (!el) return;
+    el.textContent = msg;
+    el.className = cls;
+  }
+  window.termOut = out;
+
+  const CMDS = {
+    help:   () => out('ls | cd <section> | whoami | ping | date | uname | clear | echo <msg>', 'info'),
+    ls:     () => out('blog/  projects/  whoami/', 'ok'),
+    pwd:    () => out(window.location.pathname, 'ok'),
+    whoami: () => out('dev — developer, builder, manual reader', 'ok'),
+    date:   () => out(new Date().toString(), 'info'),
+    uname:  () => out('Linux blog-os 6.1.0 #1 SMP x86_64 GNU/Linux', 'info'),
+    clear:  () => out(''),
+    ping:   () => doPing(),
+    exit:   () => out('nice try.', 'err'),
+    ':q':   () => out("you're not in vim anymore.", 'err'),
+  };
+
+  const cmdEl = document.getElementById('cmd');
+  if (cmdEl && !cmdEl.hasAttribute('data-bound')) {
+    cmdEl.addEventListener('keydown', function(e) {
+      if (e.key !== 'Enter') return;
+      const raw = this.value.trim();
+      this.value = '';
+      if (!raw) return;
+
+      const [cmd, ...rest] = raw.split(' ');
+      const arg = rest.join(' ');
+      const c = cmd.toLowerCase();
+
+      if (c === 'cd') {
+        const dest = arg.replace(/^[~/]+/,'');
+        const base = import.meta.env.BASE_URL.replace(/\/$/, '') || '';
+        
+        const map = { 
+          blog: `${base}/`, 
+          '/blog': `${base}/`, 
+          projects: `${base}/projects`, 
+          '/projects': `${base}/projects`, 
+          whoami: `${base}/whoami`, 
+          '/whoami': `${base}/whoami`, 
+          cv: `${base}/whoami` 
+        };
+        
+        const t = map[dest] || map['/'+dest];
+        if (t) {
+          window.location.href = t;
+        } else {
+           out(`bash: cd: ${arg}: No such file or directory`, 'err');
+        }
+      } else if (c === 'echo') {
+        out(arg || '', 'info');
+      } else if (CMDS[c]) {
+        CMDS[c]();
+      } else {
+        out(`bash: ${c}: command not found`, 'err');
+      }
+    });
+    cmdEl.setAttribute('data-bound', 'true');
+  }
+
+  if (!window.keypressBound) {
+    document.addEventListener('keypress', function(e) {
+      const el = document.getElementById('cmd');
+      if (el && document.activeElement !== el && window.getSelection().toString() === '' && e.key.length === 1 && !e.ctrlKey && !e.metaKey) {
+        el.focus();
+      }
+    });
+    window.keypressBound = true;
+  }
+}
+
+// Ensure the logic runs properly with Astro View Transitions
+document.addEventListener('astro:page-load', initLogic);
+// Also run it now if it wasn't triggered
+initLogic();
+</script>
+</body>
+</html>

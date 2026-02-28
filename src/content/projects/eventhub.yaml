@@ -1,0 +1,7 @@
+name: "eventhub"
+description: "Event management and recommendation platform using a Trie for fast search and Graphs for personalized suggestions. Built with Quarkus and hexagonal architecture."
+tags: ["java", "quarkus", "kafka", "postgresql", "hexagonal"]
+links:
+  - label: "github"
+    url: "https://github.com/lwbaleeiro/eventhub"
+wip: true

@@ -1,0 +1,7 @@
+name: "capital-gains"
+description: "CLI app that calculates taxes on stock market operations. Handles weighted average cost, loss deduction, and exemption rules."
+tags: ["java", "cli", "maven", "docker"]
+links:
+  - label: "github"
+    url: "https://github.com/lwbaleeiro/capital-gains"
+wip: false

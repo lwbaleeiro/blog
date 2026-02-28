@@ -1,0 +1,75 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getEntry } from 'astro:content';
+
+const profile = await getEntry('whoami', 'profile');
+const { Content } = await profile.render();
+const { experience, education, stack, contact } = profile.data;
+---
+<Layout title="whoami" activeNav="cv">
+  <section id="cv" class="active" style="display:block;">
+    <div class="sec-head">
+      <h2>/whoami</h2>
+      <span class="bc">~ $ cat about.md</span>
+    </div>
+
+    <div class="about-intro">
+      <Content />
+    </div>
+
+    {experience && experience.length > 0 && (
+      <div class="cv-block">
+        <div class="cv-bt">experience</div>
+        {experience.map(exp => (
+          <div class="cv-entry">
+            <div class="cv-date">{exp.date}</div>
+            <div>
+              <div class="cv-ttl">{exp.title}</div>
+              <div class="cv-co">{exp.company}</div>
+              {exp.description && <div class="cv-dsc">{exp.description}</div>}
+            </div>
+          </div>
+        ))}
+      </div>
+    )}
+
+    {education && education.length > 0 && (
+      <div class="cv-block">
+        <div class="cv-bt">education</div>
+        {education.map(edu => (
+          <div class="cv-entry">
+            <div class="cv-date">{edu.date}</div>
+            <div>
+              <div class="cv-ttl">{edu.title}</div>
+              <div class="cv-co">{edu.company}</div>
+              {edu.description && <div class="cv-dsc">{edu.description}</div>}
+            </div>
+          </div>
+        ))}
+      </div>
+    )}
+
+    {stack && stack.length > 0 && (
+      <div class="cv-block">
+        <div class="cv-bt">stack</div>
+        <div class="skill-grid">
+          {stack.map(skill => (
+            <span class="skill">{skill}</span>
+          ))}
+        </div>
+      </div>
+    )}
+
+    {contact && contact.length > 0 && (
+      <div class="cv-block">
+        <div class="cv-bt">contact</div>
+        {contact.map(c => (
+          <div class="ct-line">
+            <span class="k">{c.method}</span> 
+            <a href={c.url} target="_blank" rel="noopener noreferrer">{c.value}</a>
+          </div>
+        ))}
+      </div>
+    )}
+  </section>
+</Layout>

@@ -1,0 +1,7 @@
+name: "flappy-bird-ai"
+description: "Flappy Bird clone that trains itself to play using the NEAT neuroevolution algorithm. Includes both playable and AI training modes."
+tags: ["python", "neat", "pygame", "ai"]
+links:
+  - label: "github"
+    url: "https://github.com/lwbaleeiro/flappy-bird-ai"
+wip: false

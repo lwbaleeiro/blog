@@ -1,0 +1,39 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const projects = await getCollection('projects');
+---
+<Layout title="projects" activeNav="projects">
+  <section id="projects" class="active" style="display:block;">
+    <div class="sec-head">
+      <h2>/projects</h2>
+      <span class="bc">~/projects $ ls -la</span>
+    </div>
+    <div class="proj-grid">
+
+      {projects.map(project => (
+        <div class={`pc ${project.data.wip ? 'wip' : ''}`}>
+          <div class="pc-name">
+            <span class="sl">~/</span>{project.data.name}
+            {project.data.wip && <span style="color:var(--delta);font-size:13px;margin-left:6px;">[WIP]</span>}
+          </div>
+          <div class="pc-desc">{project.data.description}</div>
+          <div class="pc-tags">
+            {project.data.tags.map(tag => (
+              <span class="pc-tag">{tag}</span>
+            ))}
+          </div>
+          {project.data.links && project.data.links.length > 0 && (
+            <div class="pc-links">
+              {project.data.links.map(link => (
+                <a href={link.url} target="_blank" rel="noopener noreferrer">{link.label}</a>
+              ))}
+            </div>
+          )}
+        </div>
+      ))}
+
+    </div>
+  </section>
+</Layout>

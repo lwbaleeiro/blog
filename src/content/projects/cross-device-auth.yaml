@@ -1,0 +1,7 @@
+name: "cross-device-auth"
+description: "QR Code-based multi-device authentication flow inspired by WhatsApp Web. Login once, approve new devices in real time via WebSocket."
+tags: ["java", "spring-boot", "jwt", "redis", "websocket"]
+links:
+  - label: "github"
+    url: "https://github.com/lwbaleeiro/cross-device-auth"
+wip: false
