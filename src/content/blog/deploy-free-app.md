@@ -7,7 +7,7 @@ description: "Stop paying for hobby projects. Here is how to combine Render and 
 
 We’ve all been there. You spend your weekend building a cool side project—maybe for fun, maybe to learn a new stack. In my case, it was **Stream Vote**: a Full-Stack Polling System built with **TypeScript, Bun, and SQLite**. The project is simple but effective: users create polls, others vote, and there’s a ranking system for those who predict the winners.
 
-It worked perfectly on `localhost:3000`. But then comes the "Final Boss" of side projects: **Deployment.**
+It worked perfectly on `localhost:3000`. But then comes the problem with side projects: **Deployment.**
 
 ## The Hosting Battle: Why Render Won
 
@@ -15,19 +15,23 @@ When looking for free hosting, the usual suspects appear: **Vercel** and **Netli
 
 Vercel and Netlify are primarily built around **Serverless Functions**. While they are great for static sites or standard Node.js environments, they don't play well with Bun’s native runtime yet. To run Bun there, you often need complex workarounds or custom build steps that defeat the purpose of using a fast, "all-in-one" tool like Bun.
 
-I chose **Render** because it allows you to run a persistent **Web Service**. You can simply point to your `bun run start` command or use a Dockerfile, and it just works. It treats your app as a real server, not just a collection of isolated functions.
+I chose **Render** because it allows you to run a persistent **Web Service**. You can simply connect your github project and point to your `bun run start` command or use a Dockerfile, and it just works. It treats your app as a real server, not just a collection of isolated functions.
+
+> Check out Render: https://render.com
 
 ## The "SQLite in the Cloud" Dilemma
 
 Even with the right host, there's another "enemy": **Ephemeral File Systems.**
 
-On Render's free tier, the disk is temporary. If you deploy a standard SQLite file (`database.sqlite`), your data is wiped clean every time the app restarts or you push a new update. You could go the AWS/GCP route, but that’s like using a sledgehammer to crack a nut (and they _will_ eventually ask for your credit card).
+On Render's free tier, the disk is temporary. If you deploy a standard SQLite file (`database.sqlite`), your data is wiped clean every time the app restarts or you push a new update. You could go the Azure/AWS/GCP route, but that’s like using a sledgehammer to crack a nut (and they _will_ ask for your credit card).
 
 ## The Game Changer: Enter Turso
 
 While researching alternatives, I found **Turso**. It’s an edge database based on **libSQL** (a fork of SQLite). It offers a massive free tier without needing a credit card to start.
 
 The migration was surprisingly smooth. Instead of pointing my app to a local file, I updated the connection string to use the Turso URL and Auth Token. This allowed me to keep using the simplicity of SQLite while having the data safely stored in the cloud.
+
+> check out Turso here: https://app.turso.tech/
 
 ---
 
