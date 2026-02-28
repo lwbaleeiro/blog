@@ -11,7 +11,7 @@ Styled like a terminal. Reads like a CV. Feels like home.
 
 ## // features
 
-- **Visitor counter** — yes, I know when you visit
+- **Visitor counter** — Give me a 'ping'!
 - **Responsive** — from mobile to ultrawide
 - **Blog** — where I write about things I probably spent too long figuring out
 
