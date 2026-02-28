@@ -186,7 +186,7 @@ function initLogic() {
   }
 
   // ── VISITOR COUNTER ───────────────────────────────────────────────
-  const DOMAIN = window.location.hostname || 'localhost';
+  const DOMAIN = (window.location.hostname + window.location.pathname).replace(/\/$/, '') || 'localhost';
   const API = 'https://visitor.6developer.com';
 
   function setCounters(total, today) {
