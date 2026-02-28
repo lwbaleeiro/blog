@@ -11,6 +11,7 @@ interface Props {
 const { title, activeNav = 'blog' } = Astro.props;
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '') || '';
+const buildTime = Date.now();
 
 const allPosts = await getCollection('blog');
 const recentPosts = allPosts
@@ -151,23 +152,20 @@ const recentPosts = allPosts
   <span id="cout"></span>
 </div>
 
-<script>
+<script is:inline define:vars={{ buildTime }}>
 // Logic to execute on load and after swaps
 function initLogic() {
   const isServer = typeof window === 'undefined';
   if (isServer) return;
 
   // ── CLOCK / UPTIME ────────────────────────────────────────────────
-  if (!window.sessionStartTime) {
-    window.sessionStartTime = Date.now();
-  }
-  
   function tick() {
     const now = new Date();
     const clockEl = document.getElementById('clock');
     if(clockEl) clockEl.textContent = now.toISOString().replace('T',' ').slice(0,19) + ' UTC';
     
-    const s = Math.floor((Date.now() - window.sessionStartTime) / 1000);
+    // Uptime is now based on the moment the site was built (deployed)
+    const s = Math.floor((Date.now() - buildTime) / 1000);
     const h = String(Math.floor(s/3600)).padStart(2,'0');
     const m = String(Math.floor(s%3600/60)).padStart(2,'0');
     const sc = String(s%60).padStart(2,'0');
@@ -177,7 +175,7 @@ function initLogic() {
     if(uptimeEl) uptimeEl.textContent = u;
     
     const uptimewEl = document.getElementById('uptime-w');
-    if(uptimewEl) uptimewEl.textContent = 'session: ' + u;
+    if(uptimewEl) uptimewEl.textContent = 'kernel uptime: ' + u;
   }
   
   if (!window.clockInterval) {
@@ -186,7 +184,8 @@ function initLogic() {
   }
 
   // ── VISITOR COUNTER ───────────────────────────────────────────────
-  const DOMAIN = (window.location.hostname + window.location.pathname).replace(/\/$/, '') || 'localhost';
+  const base = '/blog'; // Hardcoded for production ID consistency
+  const DOMAIN = (window.location.hostname + base) || 'localhost';
   const API = 'https://visitor.6developer.com';
 
   function setCounters(total, today) {
