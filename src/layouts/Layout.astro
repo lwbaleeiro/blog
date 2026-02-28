@@ -28,7 +28,7 @@ const recentPosts = allPosts
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&family=VT323&display=swap" rel="stylesheet">
   <ViewTransitions />
 </head>
-<body>
+<body data-build-time={buildTime}>
 <div id="wrap">
   <header>
     <div class="header-inner">
@@ -152,11 +152,14 @@ const recentPosts = allPosts
   <span id="cout"></span>
 </div>
 
-<script is:inline define:vars={{ buildTime }}>
+<script>
 // Logic to execute on load and after swaps
 function initLogic() {
   const isServer = typeof window === 'undefined';
   if (isServer) return;
+
+  const body = document.body;
+  const buildTime = parseInt(body.getAttribute('data-build-time') || Date.now().toString());
 
   // ── CLOCK / UPTIME ────────────────────────────────────────────────
   function tick() {
@@ -184,7 +187,7 @@ function initLogic() {
   }
 
   // ── VISITOR COUNTER ───────────────────────────────────────────────
-  const base = '/blog'; // Hardcoded for production ID consistency
+  const base = (import.meta.env.BASE_URL || '/').replace(/\/$/, '');
   const DOMAIN = (window.location.hostname + base) || 'localhost';
   const API = 'https://visitor.6developer.com';
 
