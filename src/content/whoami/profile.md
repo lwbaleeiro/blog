@@ -17,14 +17,6 @@ experience:
     company: "Ecocentauro / DataNorte (Sinop-MT)"
     description: "Onboarded clients, conducted training, and provided technical analysis for the development teams."
 
-education:
-  - date: "Completed"
-    title: "Postgraduate in Software Engineering"
-    company: "PUC Minas"
-  - date: "2009 – 2013"
-    title: "Business Administration"
-    company: "UNIC"
-
 stack:
   [
     "Java (8-25)",
