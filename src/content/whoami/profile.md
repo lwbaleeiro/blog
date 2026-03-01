@@ -57,10 +57,10 @@ contact:
     url: "https://linkedin.com/in/lwbaleeiro"
 ---
 
-I'm a Backend Developer from Sinop-MT, Brazil, with **7+ years of experience**. Curiosity has always driven me — I love understanding how things work under the hood, and programming was a natural extension of that. I care a lot about writing code that's clean, observable, and built to last — not just code that ships.
+I'm a Backend Developer from Sinop-MT, Brazil, with **7+ years of experience**. Curiosity has always driven me — I love understanding how things work under the hood, and programming was a natural extension of that. I care a lot about writing code that's clean, observable, and built to last, not just code that ships.
 <br>
 <br>
 Over the years I've worked across finance, health, retail, and energy sectors, including a **B2B platform serving 6 million clients across 29 countries**. My main tools are Java (Spring Boot) and Python, but I'm equally comfortable navigating cloud infrastructure, Kafka event streams, or a Kubernetes cluster at 2am when something breaks in production.
 <br>
 <br>
-When I'm not coding for work... I'm probably coding for fun. I also do CrossFit, play video games, and watch NFL (Bears Down!🐻). Some other times, you'll find me reading about astronomy and space exploration — there's something humbling about systems operating at a scale no engineer will ever match.
+When I'm not coding for work... I'm probably coding for fun. I also do CrossFit, play video games, and watch NFL (Bears Down!🐻). Some other times, you'll find me reading about astronomy and space exploration.
