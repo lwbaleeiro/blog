@@ -1,0 +1,174 @@
+---
+interface Props {
+  activePage?: 'blog' | 'about';
+}
+
+const { activePage = 'blog' } = Astro.props;
+
+const social = {
+  github: 'github.com/luanbaleeiro',
+  linkedin: 'linkedin.com/in/luanb',
+  email: 'luan@baleeiro.dev',
+};
+---
+
+<div class="sidebar-inner">
+  <!-- Avatar + nome -->
+  <div class="profile">
+    <img
+      src="/avatar.jpg"
+      alt="Luan Baleeiro"
+      class="avatar"
+      onerror="this.style.background='#1e2d3d';this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2280%22 height=%2280%22><rect width=%2280%22 height=%2280%22 fill=%22%231e2d3d%22/><text x=%2240%22 y=%2248%22 text-anchor=%22middle%22 fill=%22%234d9fff%22 font-size=%2228%22 font-family=%22Inter,sans-serif%22 font-weight=%22700%22>LB</text></svg>'"
+    />
+    <h2 class="name">Luan Baleeiro</h2>
+    <p class="bio">DevOps Engineer</p>
+  </div>
+
+  <!-- Links sociais -->
+  <div class="section">
+    <span class="section-label">CONNECT</span>
+    <ul class="social-links">
+      <li>
+        <a href={`https://${social.github}`} target="_blank" rel="noopener noreferrer">
+          <svg class="icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.268 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.747-1.026 2.747-1.026.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.741 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/>
+          </svg>
+          {social.github}
+        </a>
+      </li>
+      <li>
+        <a href={`https://${social.linkedin}`} target="_blank" rel="noopener noreferrer">
+          <svg class="icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+          </svg>
+          {social.linkedin.length > 18 ? social.linkedin.slice(0, 18) + '..' : social.linkedin}
+        </a>
+      </li>
+      <li>
+        <a href={`mailto:${social.email}`}>
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+            <polyline points="22,6 12,13 2,6"/>
+          </svg>
+          {social.email}
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Nav -->
+  <nav class="nav">
+    <a href="/" class={`nav-link ${activePage === 'blog' ? 'active' : ''}`}>Blog</a>
+    <a href="/about" class={`nav-link ${activePage === 'about' ? 'active' : ''}`}>About</a>
+  </nav>
+</div>
+
+<style>
+  .sidebar-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  /* Profile */
+  .profile {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 0.5rem;
+    border: 2px solid var(--border);
+  }
+
+  .name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .bio {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+
+  /* Section */
+  .section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .section-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+  }
+
+  /* Social links */
+  .social-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .social-links a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    transition: color 0.2s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .social-links a:hover {
+    color: var(--accent);
+  }
+
+  .icon {
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+    opacity: 0.7;
+  }
+
+  /* Nav */
+  .nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .nav-link {
+    padding: 0.5rem 0;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s;
+    width: fit-content;
+  }
+
+  .nav-link.active {
+    color: var(--text);
+    border-bottom-color: var(--accent);
+  }
+
+  .nav-link:hover:not(.active) {
+    color: var(--text);
+  }
+</style>
