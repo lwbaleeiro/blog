@@ -1,21 +1,12 @@
 ---
 ---
 
-## Olá, sou Luan Baleeiro
+## Hi, I'm Luan Baleeiro
 
-Engenheiro DevOps com foco em Cloud Governance, automação de infraestrutura e plataformas de desenvolvimento.
-
-Tenho background em desenvolvimento backend (Java, Python) e nos últimos anos migrei para infraestrutura — hoje trabalho com Azure, Kubernetes, Terraform e ArgoCD no dia a dia.
-
-## O que faço
-
-- Infraestrutura como código com **Terraform**
-- Orquestração de containers com **Kubernetes** e **ArgoCD**
-- Governança de cloud: RBAC, policies e compliance automation
-- Pipelines CI/CD no **Azure DevOps**
-
-## Este blog
-
-Escrevo sobre DevOps, Cloud, automação e as coisas que aprendo no caminho — sem floreio.
-
-Se quiser trocar uma ideia, me manda uma mensagem.
+DevOps Engineer with 3+ years working on cloud infrastructure, automation, and platform engineering — backed by 6+ years in backend development.
+ 
+I design and maintain cloud infrastructure at scale. Day-to-day that means CI/CD pipelines on Azure DevOps, IaC with Terraform, container orchestration with Kubernetes and ArgoCD, and a wide range of cloud services. 
+ 
+I work closely with DataOps and Development teams to optimize pipelines, troubleshoot infrastructure issues, and make deployments more reliable. Having been a developer myself makes those conversations easier.
+ 
+Right now I'm directing my focus toward Cloud Governance — RBAC, policy enforcement, compliance.

@@ -6,9 +6,9 @@ interface Props {
 const { activePage = 'blog' } = Astro.props;
 
 const social = {
-  github: 'github.com/luanbaleeiro',
-  linkedin: 'linkedin.com/in/luanb',
-  email: 'luan@baleeiro.dev',
+  github: 'github.com/lwbaleeiro',
+  linkedin: 'linkedin.com/in/lwbaleeiro',
+  email: 'dev.baleeiro@gmail.com'
 };
 ---
 
@@ -16,7 +16,7 @@ const social = {
   <!-- Avatar + nome -->
   <div class="profile">
     <img
-      src="/avatar.jpg"
+      src="/blog/avatar.jpg"
       alt="Luan Baleeiro"
       class="avatar"
       onerror="this.style.background='#1e2d3d';this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2280%22 height=%2280%22><rect width=%2280%22 height=%2280%22 fill=%22%231e2d3d%22/><text x=%2240%22 y=%2248%22 text-anchor=%22middle%22 fill=%22%234d9fff%22 font-size=%2228%22 font-family=%22Inter,sans-serif%22 font-weight=%22700%22>LB</text></svg>'"
