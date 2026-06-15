@@ -19,27 +19,24 @@ Substitua / adicione os arquivos listados abaixo na raiz do projeto recém-criad
 ### 3. Estrutura de arquivos a criar
 
 ```
-luan-blog/
-├── astro.config.mjs          ← substituir
-├── src/
-│   ├── content/
-│   │   ├── config.ts         ← criar
-│   │   ├── blog/
-│   │   │   └── meu-primeiro-post.md   ← template de post
-│   │   └── about/
-│   │       └── index.md      ← template do about
-│   ├── layouts/
-│   │   └── BaseLayout.astro  ← criar
-│   ├── components/
-│   │   ├── Sidebar.astro     ← criar
-│   │   └── PostCard.astro    ← criar
-│   └── pages/
-│       ├── index.astro       ← substituir
-│       ├── about.astro       ← criar
-│       └── blog/
-│           └── [slug].astro  ← criar
-└── public/
-    └── avatar.jpg            ← adicionar sua foto aqui
+src
+├── components
+│   ├── PostCard.astro
+│   └── Sidebar.astro
+├── content
+│   ├── about
+│   │   └── index.md
+│   └── blog
+│       ├── copy-paste-devops.md
+│       ├── deploy-free-app.md
+│       └── old-vs-modern-java.md
+├── content.config.ts
+├── layouts
+│   └── BaseLayout.astro
+└── pages
+    ├── about.astro
+    ├── index.astro
+    └── [slug].astro
 ```
 
 ### 4. Rodar em desenvolvimento
